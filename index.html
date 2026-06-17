@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA no Mercado de Trabalho — TCC</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-900: #042C53;
+    --blue-800: #0C447C;
+    --blue-600: #185FA5;
+    --blue-400: #378ADD;
+    --blue-200: #85B7EB;
+    --blue-100: #B5D4F4;
+    --blue-50: #E6F1FB;
+    --teal-600: #0F6E56;
+    --teal-400: #1D9E75;
+    --teal-100: #9FE1CB;
+    --teal-50: #E1F5EE;
+    --gray-900: #2C2C2A;
+    --gray-800: #444441;
+    --gray-600: #5F5E5A;
+    --gray-200: #B4B2A9;
+    --gray-100: #D3D1C7;
+    --gray-50: #F1EFE8;
+    --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #07111f;
+    color: #e8edf3;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(7, 17, 31, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(55, 138, 221, 0.15);
+  }
+
+  nav .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--blue-400);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: #9aafc4;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--blue-400); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 7rem 2rem 4rem;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(55, 138, 221, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(29, 158, 117, 0.08) 0%, transparent 50%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(55,138,221,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(55,138,221,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .hero-content {
+    position: relative;
+    max-width: 820px;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue-400);
+    background: rgba(55, 138, 221, 0.1);
+    border: 1px solid rgba(55, 138, 221, 0.25);
+    padding: 0.35rem 1rem;
+    border-radius: 999px;
+    margin-bottom: 2rem;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    color: #f0f5fa;
+  }
+
+  .hero h1 span {
+    color: var(--blue-400);
+  }
+
+  .hero p {
+    font-size: 1.125rem;
+    color: #7a93ad;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    line-height: 1.75;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--blue-600);
+    color: white;
+    text-decoration: none;
+    padding: 0.875rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: background 0.2s, transform 0.15s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover { background: var(--blue-400); transform: translateY(-1px); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: #9aafc4;
+    text-decoration: none;
+    padding: 0.875rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    border: 1px solid rgba(154, 175, 196, 0.25);
+    transition: border-color 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover { border-color: var(--blue-400); color: var(--blue-400); }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 2rem;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue-400);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    color: #f0f5fa;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.0625rem;
+    color: #7a93ad;
+    max-width: 560px;
+    line-height: 1.75;
+  }
+
+  /* ABOUT */
+  .about-bg { background: #0a1624; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 720px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    nav ul { display: none; }
+    nav { padding: 1rem 1.5rem; }
+  }
+
+  .about-text p {
+    color: #8aa0b8;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+  }
+
+  .stat-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    background: rgba(55, 138, 221, 0.06);
+    border: 1px solid rgba(55, 138, 221, 0.15);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .stat-card .number {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--blue-400);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-card .label {
+    font-size: 0.8125rem;
+    color: #7a93ad;
+    line-height: 1.4;
+  }
+
+  /* TOPICS */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .topic-card {
+    background: #0d1e2e;
+    border: 1px solid rgba(55, 138, 221, 0.1);
+    border-radius: 12px;
+    padding: 1.75rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .topic-card:hover {
+    border-color: rgba(55, 138, 221, 0.35);
+    transform: translateY(-3px);
+  }
+
+  .topic-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+  }
+
+  .topic-icon.blue { background: rgba(55, 138, 221, 0.12); }
+  .topic-icon.teal { background: rgba(29, 158, 117, 0.12); }
+  .topic-icon.amber { background: rgba(239, 159, 39, 0.12); }
+
+  .topic-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: #d4e3f0;
+    margin-bottom: 0.625rem;
+  }
+
+  .topic-card p {
+    font-size: 0.9rem;
+    color: #7a93ad;
+    line-height: 1.65;
+  }
+
+  /* SURVEY SECTION */
+  .survey-bg {
+    background: linear-gradient(180deg, #07111f 0%, #081929 50%, #07111f 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .survey-bg::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(55, 138, 221, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .survey-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .survey-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  @media (max-width: 640px) {
+    .survey-cards { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+  }
+
+  .survey-card {
+    border-radius: 16px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .survey-card.uses-ai {
+    background: linear-gradient(135deg, #0d2340 0%, #0f2d4f 100%);
+    border: 1px solid rgba(55, 138, 221, 0.3);
+  }
+
+  .survey-card.no-ai {
+    background: linear-gradient(135deg, #081d16 0%, #0a2619 100%);
+    border: 1px solid rgba(29, 158, 117, 0.3);
+  }
+
+  .survey-card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    opacity: 0.05;
+  }
+
+  .survey-card.uses-ai::after { background: var(--blue-400); transform: translate(40%, -40%); }
+  .survey-card.no-ai::after { background: var(--teal-400); transform: translate(40%, -40%); }
+
+  .survey-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.875rem;
+    border-radius: 999px;
+  }
+
+  .badge-blue {
+    background: rgba(55, 138, 221, 0.15);
+    color: var(--blue-200);
+    border: 1px solid rgba(55, 138, 221, 0.2);
+  }
+
+  .badge-teal {
+    background: rgba(29, 158, 117, 0.15);
+    color: var(--teal-100);
+    border: 1px solid rgba(29, 158, 117, 0.2);
+  }
+
+  .survey-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #e8f2fa;
+    line-height: 1.3;
+  }
+
+  .survey-card p {
+    font-size: 0.9375rem;
+    color: #7a93ad;
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .survey-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .survey-btn.btn-blue {
+    background: var(--blue-600);
+    color: white;
+  }
+
+  .survey-btn.btn-blue:hover { background: var(--blue-400); transform: translateY(-1px); }
+
+  .survey-btn.btn-teal {
+    background: var(--teal-600);
+    color: white;
+  }
+
+  .survey-btn.btn-teal:hover { background: var(--teal-400); transform: translateY(-1px); }
+
+  .arrow-icon {
+    font-size: 1rem;
+    transition: transform 0.2s;
+  }
+
+  .survey-btn:hover .arrow-icon { transform: translateX(3px); }
+
+  /* FOOTER */
+  footer {
+    background: #050d17;
+    border-top: 1px solid rgba(55, 138, 221, 0.1);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: var(--blue-400);
+    margin-bottom: 1rem;
+  }
+
+  .footer-authors {
+    font-size: 0.875rem;
+    color: #5e7a92;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-authors strong {
+    color: #8aa0b8;
+    font-weight: 500;
+  }
+
+  .footer-institution {
+    font-size: 0.8125rem;
+    color: #445a6e;
+    margin-top: 0.25rem;
+  }
+
+  .divider {
+    height: 1px;
+    background: rgba(55, 138, 221, 0.08);
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">TCC — IA & Trabalho</div>
+  <ul>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#temas">Temas</a></li>
+    <li><a href="#pesquisa">Pesquisa</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Trabalho de Conclusão de Curso</div>
+    <h1>O Impacto da <span>Inteligência Artificial</span> no Mercado de Trabalho</h1>
+    <p>Uma pesquisa sobre como a IA está transformando profissões, criando novas oportunidades e redefinindo habilidades no ambiente profissional brasileiro.</p>
+    <div class="hero-cta">
+      <a href="#pesquisa" class="btn-primary">Participar da pesquisa →</a>
+      <a href="#sobre" class="btn-secondary">Saiba mais</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOBRE -->
+<section id="sobre" class="about-bg">
+  <div class="container">
+    <div class="section-eyebrow">Sobre o projeto</div>
+    <h2 class="section-title">Por que estudar IA<br>e o mercado de trabalho?</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>A inteligência artificial deixou de ser ficção científica e se tornou uma realidade presente no cotidiano das empresas e trabalhadores. Ferramentas como ChatGPT, Copilot e sistemas de automação estão mudando profundamente a forma como trabalhamos.</p>
+        <p>Este TCC investiga como profissionais brasileiros percebem, utilizam e são afetados por essas tecnologias — tanto os que já integram IA em seu dia a dia quanto os que ainda não tiveram esse contato.</p>
+        <p>Sua participação é fundamental para construirmos um panorama real dessa transformação.</p>
+      </div>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="number">85M</div>
+          <div class="label">empregos podem ser impactados pela automação até 2025 (WEF)</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">97M</div>
+          <div class="label">novos papéis surgirão em áreas de colaboração humana-IA</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">44%</div>
+          <div class="label">das habilidades dos trabalhadores precisarão ser atualizadas</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">77%</div>
+          <div class="label">dos empregos globais têm potencial para algum nível de automação</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TEMAS -->
+<section id="temas">
+  <div class="container">
+    <div class="section-eyebrow">Temas abordados</div>
+    <h2 class="section-title">O que a pesquisa explora</h2>
+    <p class="section-subtitle">Investigamos três grandes eixos sobre a relação entre IA e trabalho no contexto brasileiro.</p>
+    <div class="topics-grid">
+      <div class="topic-card">
+        <div class="topic-icon blue">🤖</div>
+        <h3>Automação e substituição</h3>
+        <p>Quais funções estão sendo automatizadas? Como trabalhadores percebem o risco de substituição em sua área? Existe uma diferença real entre setores?</p>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon teal">📈</div>
+        <h3>Produtividade e adoção</h3>
+        <p>Profissionais que usam IA relatam ganhos reais de produtividade? Quais são as barreiras para adoção? Como as empresas estão incentivando o uso?</p>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon amber">🎓</div>
+        <h3>Requalificação e futuro</h3>
+        <p>Como os trabalhadores estão se preparando para um mercado com IA? Quais habilidades estão se tornando mais valiosas? Qual o papel da educação nesse processo?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PESQUISA -->
+<section id="pesquisa" class="survey-bg">
+  <div class="container">
+    <div class="survey-header">
+      <div class="section-eyebrow">Participe</div>
+      <h2 class="section-title">Responda o questionário</h2>
+      <p class="section-subtitle" style="margin: 0 auto;">Selecione o perfil que melhor representa sua relação atual com inteligência artificial no trabalho. O preenchimento leva menos de 5 minutos.</p>
+    </div>
+
+    <div class="survey-cards">
+      <!-- CARD 1: USA IA -->
+      <div class="survey-card uses-ai">
+        <span class="survey-badge badge-blue">✦ Perfil 1</span>
+        <h3>Utilizo IA no meu trabalho</h3>
+        <p>Para profissionais que já usam ferramentas de inteligência artificial — como ChatGPT, Copilot, Midjourney ou qualquer outra — em suas rotinas de trabalho.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfCHEU-NtZ59V_cKDK_BaXlmvSblNWTvOzDBZW3Mwsr1Z2Xxg/viewform?usp=dialog" target="_blank" class="survey-btn btn-blue">
+          Responder agora <span class="arrow-icon">→</span>
+        </a>
+      </div>
+
+      <!-- CARD 2: NÃO USA IA (placeholder) -->
+      <div class="survey-card no-ai">
+        <span class="survey-badge badge-teal">✦ Perfil 2</span>
+        <h3>Não utilizo IA no meu trabalho</h3>
+        <p>Para profissionais que ainda não incorporaram ferramentas de inteligência artificial em suas atividades profissionais — seja por escolha, falta de acesso ou desconhecimento.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScVgEe8Cbepnuw8Sk5uFGN1yKqmx7a2dmigbVkDrOS4wITVjw/viewform?usp=publish-editor" target="_blank" class="survey-btn btn-teal" id="btn-no-ai">
+          Responder agora <span class="arrow-icon">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">IA & Mercado de Trabalho</div>
+  <div class="footer-authors">
+    <strong>Daniel de Magalhães Alvim &nbsp;·&nbsp; Pedro Vinicius da Silva Gomes &nbsp;·&nbsp; Gabriel Silva Mello</strong>
+  </div>
+  <div class="footer-institution">Trabalho de Conclusão de Curso · 2025</div>
+</footer>
+
+<script>
+  document.getElementById('btn-no-ai').addEventListener('click', function(e) {
+    e.preventDefault();
+    alert('O formulário para quem não usa IA ainda será adicionado em breve!');
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.topic-card, .survey-card, .stat-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
